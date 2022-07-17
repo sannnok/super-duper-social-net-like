@@ -1,0 +1,25 @@
+Test task idea
+
+* Desktop view - list with user left
+    * When selected(click/tap) - I want a lot of hearts to flow. 
+        * Maybe use CSS for that.
+    * 1st - default
+    * Mobile view - move list to side menu with burger(use grid)
+        * The Menu user is able to open with an swipe, and close, 
+    * Use virtual scroll if needed. 
+* The List of Posts
+    * Use id as key for lists for optimisation
+    * Used in card wrapper.
+        * Header
+            * Name
+            * Contact info
+            * Address info
+            * Website
+            * Company, Credo
+            * Bachelor(Studies)
+        * List with posts
+            * Just Title & Body
+            * Mobile view
+                * It’s Instagram like - User content is scrolled up to continue with users post.
+            * Desktop view
+                * The same as Mobile or do it sticky

@@ -19,7 +19,6 @@ describe('AppComponent', () => {
   it(`should have as title 'super-duper-social-net-like'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('super-duper-social-net-like');
   });
 
   it('should render title', () => {
