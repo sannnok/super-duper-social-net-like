@@ -17,7 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/super-duper-social-net-like",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -52,6 +51,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref": "https://sannnok.github.io/super-duper-social-net-like/",
+              "outputPath": "docs",
               "outputHashing": "all"
             },
             "development": {
