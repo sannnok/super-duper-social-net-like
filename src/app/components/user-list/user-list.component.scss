@@ -1,0 +1,13 @@
+::ng-deep .mat-selection-list {
+  .mat-list-item {
+    height: 64px !important;
+  
+    &-content {
+      padding: 0 48px !important;
+    }
+  }
+
+  .mat-list-item:not(:nth-child(1)) {
+    border-top: 1px dashed #d3d3d369;
+  }
+}

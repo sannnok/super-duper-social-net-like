@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { MobileDetectorService } from '../services/mobile-detector.service';
 
 @Component({
   selector: 'app-user-profiles-wrapper',
@@ -8,7 +10,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class UserProfilesWrapperComponent implements OnInit {
 
-  constructor() { }
+  constructor(protected mobileDetectorService: MobileDetectorService) { }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,5 @@
-<ul>
-  <li>First</li>
-  <li>Second</li>
-  <li>Third</li>
-</ul>
+<mat-selection-list [(ngModel)]="selectedUser" [multiple]="false">
+  <mat-list-option *ngFor="let user of (users$ | async) as users; trackBy:identify" [value]="user" [selected]="user === users[0]">
+    {{ user.username }}
+  </mat-list-option>
+</mat-selection-list>
