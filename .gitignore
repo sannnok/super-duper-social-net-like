@@ -4,4 +4,3 @@ dist
 .history
 npm-debug.log
 .DS_STORE
-docs
