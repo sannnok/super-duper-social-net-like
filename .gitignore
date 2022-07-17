@@ -1,0 +1,6 @@
+node_modules
+dist
+.angular
+.history
+npm-debug.log
+.DS_STORE
