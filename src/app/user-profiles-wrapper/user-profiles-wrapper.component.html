@@ -1,4 +1,14 @@
-<mat-drawer-container class="main-container">
-  <mat-drawer #drawer class="main-container_side" mode="side" [opened]="!(mobileDetectorService.isMobile$ | async)"><app-user-list></app-user-list></mat-drawer>
-  <mat-drawer-content><app-user-page></app-user-page><button (click)="drawer.toggle()">Toggle</button> </mat-drawer-content>
+<mat-drawer-container class="main-container" [appGesture]="drawer">
+  <mat-drawer #drawer class="main-container_side" mode="side"  [opened]="!(mobileDetectorService.isMobile$ | async)">
+    <app-user-list (selectedWhileMobile)="drawer.close()"></app-user-list>
+  </mat-drawer>
+ 
+  <mat-drawer-content class="main-container_details">
+    <app-user-page></app-user-page>
+    <button
+      (click)="drawer.toggle()"
+      class="mobile-burger"
+      [class.is-hidden]="!(mobileDetectorService.isMobile$ | async)">Toggle</button>
+
+  </mat-drawer-content>
 </mat-drawer-container>

@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
