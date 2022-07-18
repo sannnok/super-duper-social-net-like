@@ -1,0 +1,38 @@
+.user {
+  padding: 16px;
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    line-height: 30px;
+    font-size: 16px;
+    color: grey;
+  }
+
+  &__avatar {
+    height: 100px;
+    width: 100px;
+    background: grey;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 50px;
+    color: black;
+  }
+
+  &__username {
+    font-size: 28px;
+    color: rgb(21, 21, 21);
+  }
+
+  &__detail-info {
+    letter-spacing: 1px;
+    color: grey;
+    padding: 24px 0;
+    font-size: 14px;
+  }
+}
+
+.hidden {
+  display: none;
+}

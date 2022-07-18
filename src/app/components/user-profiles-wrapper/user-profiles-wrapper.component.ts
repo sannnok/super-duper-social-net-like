@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
-import { MobileDetectorService } from '../services/core/mobile-detector.service';
+import { User } from 'src/app/interfaces/user.interface';
+import { MobileDetectorService } from '../../services/core/mobile-detector.service';
 
 @Component({
   selector: 'app-user-profiles-wrapper',
@@ -9,6 +9,8 @@ import { MobileDetectorService } from '../services/core/mobile-detector.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfilesWrapperComponent implements OnInit {
+  protected selectedUser?: User;
+
   constructor(
     protected mobileDetectorService: MobileDetectorService,
   ) { }
@@ -16,4 +18,8 @@ export class UserProfilesWrapperComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onUserSelect(user: User) {
+    this.selectedUser = user;
+    console.log('onUserSelect, ', user)
+  }
 }

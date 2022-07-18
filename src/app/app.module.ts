@@ -2,7 +2,7 @@ import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule, HammerGestureConfig, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { UserProfilesWrapperComponent } from './user-profiles-wrapper/user-profiles-wrapper.component';
+import { UserProfilesWrapperComponent } from './components/user-profiles-wrapper/user-profiles-wrapper.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +13,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import * as Hammer from 'hammerjs';
 import { GestureDirective } from './directives/gesture.directive';
+import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { DataService } from './services/data.service';
+import { AddressPipe } from './pipes/address.pipe';
+import { EmojiPipe } from './pipes/emoji.pipe';
 
 
 const MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
@@ -35,6 +39,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     UserListComponent,
     UserPageComponent,
     GestureDirective,
+    UserPostsComponent,
+    AddressPipe,
+    EmojiPipe,
   ],
   imports: [
     CommonModule,
@@ -51,6 +58,13 @@ export class MyHammerConfig extends HammerGestureConfig {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
     },
+    // {
+    //   provide : GeoService,
+    //   useFactory: (userDataService: DataService) => {
+    //     userDataService.
+    //   },
+    //   deps: [DataService]
+    // }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,2 +1,28 @@
-<section>User info</section>
-<section>User Posts</section>
+<div class="user" *ngIf="user; else userDetailsSkeleton">
+  <header>
+    <ng-container *ngIf="loading; then avatarSkeleton"></ng-container>
+    <img class="user__avatar" [class.hidden]="loading" src="{{user.avatar}}" (load)="onImageLoad()" alt="UserAvatar">
+    <div>
+      <span class="user__username">{{ user?.username }}</span>
+      <br>
+      <span>{{ user.company.catchPhrase | emoji:'catchphrase'}}</span>
+    </div>
+  </header>
+
+  <section class="user__detail-info">
+    <span>{{ user.address | address | emoji:'address'}}</span><br>
+    <span>{{ user.name | emoji:'name'}}</span><br>
+    <span>{{ user.phone | emoji:'phone'}}</span><br>
+    <span>{{ user.website | emoji:'website'}}</span><br>
+    <span>{{ user.company.name | emoji:'company'}}</span><br>
+    <span>{{ user.company.bs | emoji:'bs'}}</span><br>
+  </section>
+</div>
+
+<ng-template #userDetailsSkeleton>
+  <div style="width: 100%; height: 20%; background: grey;"></div>
+</ng-template>
+
+<ng-template #avatarSkeleton>
+  <div class="user__avatar">UserAvatar</div>
+</ng-template>

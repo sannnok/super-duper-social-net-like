@@ -1,0 +1,23 @@
+<mat-drawer-container class="main-container" [appGesture]="drawer">
+  <mat-drawer #drawer class="main-container_side" mode="side"  [opened]="!(mobileDetectorService.isMobile$ | async)">
+    <app-user-list (selectedWhileMobile)="drawer.close(); onUserSelect($event)"
+                   (selected)="onUserSelect($event)"></app-user-list>
+  </mat-drawer>
+ 
+  <mat-drawer-content class="main-container_details">
+    <app-user-page [user]="selectedUser">
+    </app-user-page>
+    <section class="tab-list">
+      <section class="tab-list__user-posts">
+        <app-user-posts></app-user-posts>
+      </section>
+      <section class="tab-list__user-geo"></section>  
+    </section>
+    
+    <ng-container [ngTemplateOutlet]="burger"></ng-container>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<ng-template #burger>
+  <button (click)="drawer.toggle()" class="mobile-burger" [class.is-hidden]="!(mobileDetectorService.isMobile$ | async)">Toggle</button>
+</ng-template>
