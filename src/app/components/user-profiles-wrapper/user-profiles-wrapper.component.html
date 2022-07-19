@@ -26,8 +26,5 @@
 <ng-template #geo><app-geo [invalidate]="changedTab" class="main-container__details__tab-list__user-geo" [latlng]="selectedUser?.address?.geo"   ></app-geo></ng-template>
 
 <ng-template #burger>
-  <input id="menu-toggle" type="checkbox" />
-  <label class='menu-button-container' for="menu-toggle"></label>
   <app-button (click)="drawer.toggle()" class="mobile-burger" [class.is-hidden]="!(mobileDetectorService.isMobile$ | async)"></app-button>
-
 </ng-template>
