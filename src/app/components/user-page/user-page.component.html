@@ -1,11 +1,11 @@
 <div class="user" *ngIf="user; else userDetailsSkeleton">
   <header>
     <ng-container *ngIf="loading; then avatarSkeleton"></ng-container>
-    <img class="user__avatar" [class.hidden]="loading" src="{{user.avatar}}" (load)="onImageLoad()" alt="UserAvatar">
+    <img class="user__avatar" [class.hidden]="loading" src="{{ user.avatar }}" (load)="onImageLoad()" alt="UserAvatar">
     <div>
       <span class="user__username">{{ user?.username }}</span>
       <br>
-      <span>{{ user.company.catchPhrase | emoji:'catchphrase'}}</span>
+      <span>{{ user.company.catchPhrase | emoji:'catchphrase' }}</span>
     </div>
   </header>
 

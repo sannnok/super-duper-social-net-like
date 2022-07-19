@@ -21,6 +21,7 @@ import { EmojiPipe } from './pipes/emoji.pipe';
 import { GeoComponent } from './components/geo/geo.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ButtonComponent } from './components/lib/button/button.component';
+import { FlowDirective } from './directives/flow.directive';
 
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
@@ -45,6 +46,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     EmojiPipe,
     GeoComponent,
     ButtonComponent,
+    FlowDirective,
   ],
   imports: [
     CommonModule,

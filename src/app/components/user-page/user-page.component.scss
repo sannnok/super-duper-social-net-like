@@ -8,11 +8,18 @@
     line-height: 30px;
     font-size: 16px;
     color: grey;
+
+    div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 52px;
+    }
   }
 
   &__avatar {
     height: 100px;
-    width: 100px;
+    min-width: 100px;
     background: grey;
     text-align: center;
     line-height: 100px;
@@ -30,6 +37,7 @@
     color: grey;
     padding: 24px 0;
     font-size: 14px;
+    line-height: 20x;
   }
 }
 
