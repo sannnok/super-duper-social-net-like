@@ -13,9 +13,9 @@
     <span>{{ user.address | address | emoji:'address'}}</span><br>
     <span>{{ user.name | emoji:'name'}}</span><br>
     <span>{{ user.phone | emoji:'phone'}}</span><br>
-    <span>{{ user.website | emoji:'website'}}</span><br>
     <span>{{ user.company.name | emoji:'company'}}</span><br>
     <span>{{ user.company.bs | emoji:'bs'}}</span><br>
+    <a href="{{ 'https://' + user.website }}" target="_blank">{{ user.website | emoji:'website'}}</a><br>
   </section>
 </div>
 

@@ -7,16 +7,12 @@ import { User } from 'src/app/interfaces/user.interface';
   styleUrls: ['./user-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserPageComponent implements OnInit, OnChanges {
+export class UserPageComponent implements OnChanges {
   protected loading = false;
 
   @Input() public user?: User;
 
   constructor() { }
-
-  ngOnInit(): void {
-    console.log('user: ', this.user)
-  }
 
   ngOnChanges() {
     this.loading = true;

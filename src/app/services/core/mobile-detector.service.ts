@@ -11,7 +11,7 @@ export class MobileDetectorService {
 
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isMobile$ = this.breakpointObserver.observe(['(min-width: 500px)'])
-      .pipe(map(s => !s.matches), shareReplay(), tap(() => console.log('triggered')));
+      .pipe(map(s => !s.matches)).pipe(shareReplay());
     this.isMobile$.subscribe(isMobile => this.isMobile = isMobile);
   }
 }

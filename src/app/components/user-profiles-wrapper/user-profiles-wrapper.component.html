@@ -1,23 +1,33 @@
 <mat-drawer-container class="main-container" [appGesture]="drawer">
-  <mat-drawer #drawer class="main-container_side" mode="side"  [opened]="!(mobileDetectorService.isMobile$ | async)">
-    <app-user-list (selectedWhileMobile)="drawer.close(); onUserSelect($event)"
+  <mat-drawer #drawer class="main-container__side" mode="side"  [opened]="!(mobileDetectorService.isMobile$ | async)">
+    <app-user-list (selectedWhileMobile)="onUserSelectedWhileMobile($event, drawer)"
                    (selected)="onUserSelect($event)"></app-user-list>
   </mat-drawer>
  
-  <mat-drawer-content class="main-container_details">
+  <mat-drawer-content class="main-container__details">
     <app-user-page [user]="selectedUser">
     </app-user-page>
-    <section class="tab-list">
-      <section class="tab-list__user-posts">
-        <app-user-posts></app-user-posts>
-      </section>
-      <section class="tab-list__user-geo"></section>  
+
+    <section class="main-container__details__tab-list">
+      <mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabChanged($event)">
+        <mat-tab *ngFor="let tab of tabs" label="{{ tab.label }}">
+          <ng-container [ngTemplateOutlet]="tab.templateRef"></ng-container>
+        </mat-tab>
+      </mat-tab-group>
     </section>
     
     <ng-container [ngTemplateOutlet]="burger"></ng-container>
   </mat-drawer-content>
 </mat-drawer-container>
 
+
+<ng-template #posts><app-user-posts class="main-container__details__tab-list__user-posts" [user]="selectedUser" (postCount)="onPostCountFinish($event)"></app-user-posts></ng-template>
+
+<ng-template #geo><app-geo [invalidate]="changedTab" class="main-container__details__tab-list__user-geo" [latlng]="selectedUser?.address?.geo"   ></app-geo></ng-template>
+
 <ng-template #burger>
-  <button (click)="drawer.toggle()" class="mobile-burger" [class.is-hidden]="!(mobileDetectorService.isMobile$ | async)">Toggle</button>
+  <input id="menu-toggle" type="checkbox" />
+  <label class='menu-button-container' for="menu-toggle"></label>
+  <app-button (click)="drawer.toggle()" class="mobile-burger" [class.is-hidden]="!(mobileDetectorService.isMobile$ | async)"></app-button>
+
 </ng-template>

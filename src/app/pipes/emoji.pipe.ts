@@ -29,6 +29,8 @@ export class EmojiPipe implements PipeTransform {
         return '💬';
       case 'bs':
         return '💼';
+      case 'star':
+        return '☆';
       default:
         return '';
     }

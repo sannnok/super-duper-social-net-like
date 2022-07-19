@@ -6,21 +6,22 @@ import { UserProfilesWrapperComponent } from './components/user-profiles-wrapper
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { HttpClientModule } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import * as Hammer from 'hammerjs';
 import { GestureDirective } from './directives/gesture.directive';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
-import { DataService } from './services/data.service';
 import { AddressPipe } from './pipes/address.pipe';
 import { EmojiPipe } from './pipes/emoji.pipe';
+import { GeoComponent } from './components/geo/geo.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ButtonComponent } from './components/lib/button/button.component';
 
-
-const MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
-const isMobile = MOBILE_REGEX.test(navigator.userAgent);
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   override overrides = <any> {
@@ -42,6 +43,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     UserPostsComponent,
     AddressPipe,
     EmojiPipe,
+    GeoComponent,
+    ButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -49,22 +52,18 @@ export class MyHammerConfig extends HammerGestureConfig {
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HammerModule,
+    LeafletModule,
     MatSidenavModule,
     MatListModule,
-    HammerModule,
+    MatTabsModule,
+    MatCardModule,
   ],
   providers: [
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
     },
-    // {
-    //   provide : GeoService,
-    //   useFactory: (userDataService: DataService) => {
-    //     userDataService.
-    //   },
-    //   deps: [DataService]
-    // }
   ],
   bootstrap: [AppComponent]
 })
