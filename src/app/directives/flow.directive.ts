@@ -7,7 +7,7 @@ import { generatePerlinNoise } from '../utils/utils';
 const OPTIONS = {
   intervalMs: 30,
   speed: 5,
-  trailTailLive: 1700,
+  trailTailLive: 600,
   width: 15,
   soft: 7,
   persistence: 0.2,
@@ -55,7 +55,7 @@ export class FlowDirective {
   }
 
   private setTheNoise() {
-    let noise = generatePerlinNoise(1, 1000, {
+    let noise = generatePerlinNoise(1, 100, {
       octaveCount: OPTIONS.soft,
       persistence: OPTIONS.persistence,
       amplitude: OPTIONS.amplitude,
@@ -111,7 +111,7 @@ export class FlowDirective {
 
     this.particulars.push(particular);
 
-    timer(OPTIONS.trailTailLive / 5).subscribe(() => this.renderer.addClass(div, 'hide'))
+    timer(OPTIONS.trailTailLive / 2).subscribe(() => this.renderer.addClass(div, 'hide'))
 
     timer(OPTIONS.trailTailLive).subscribe(() => {
       this.particulars = this.particulars.filter(p => p.div !== div)

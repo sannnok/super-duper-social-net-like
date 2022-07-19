@@ -35,8 +35,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 	left: 0;
 	z-index: 1;
 	pointer-events: none;
-	transition: opacity 1.5s cubic-bezier(0, 0, 0.97, 1.61);
-	transition: left .2s cubic-bezier(0, 0, 0.97, 1.61);
+	transition: opacity .1s cubic-bezier(0, 0, 0.97, 1.61), left .5s cubic-bezier(0, 0, 0.97, 1.61);
 	opacity: 1;
 }
 
