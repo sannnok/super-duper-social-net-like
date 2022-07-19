@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { User } from 'src/app/interfaces/user.interface';
 import { SidenavService } from 'src/app/services/core/sidenav.service';
 import { MobileDetectorService } from '../../services/core/mobile-detector.service';
+import { GeoComponent } from '../geo/geo.component';
 import { UserPostsComponent } from '../user-posts/user-posts.component';
 
 @Component({
@@ -13,9 +15,9 @@ import { UserPostsComponent } from '../user-posts/user-posts.component';
 })
 export class UserProfilesWrapperComponent implements OnInit {
   @ViewChild('posts', { static: true }) public posts?: TemplateRef<UserPostsComponent>;
-  @ViewChild('geo', { static: true }) public geo?: TemplateRef<any>;
+  @ViewChild('geo', { static: true }) public geo?: TemplateRef<GeoComponent>;
   protected selectedUser?: User;
-  protected changedTab: any;
+  protected changedTab!: MatTabChangeEvent;
 
   protected tabs?: {
     label: string,
@@ -39,24 +41,25 @@ export class UserProfilesWrapperComponent implements OnInit {
   ]
   }
 
-  onUserSelect(user: User) {
+  protected onUserSelect(user: User) {
     this.selectedUser = user;
     this.sidenavService.opened = false
   }
 
-  onUserSelectedWhileMobile(user: User, drawer: MatDrawer) {
+  protected onUserSelectedWhileMobile(user: User, drawer: MatDrawer) {
     drawer.close();
     this.onUserSelect(user);
   }
 
-  onPostCountFinish(postLength: number) {
+  protected onPostCountFinish(postLength: number) {
     const postTab = this.tabs?.find(tab => tab.label.includes('Posts'));
     if(postTab) {
       postTab.label = `${postLength} Posts`
     }
   }
 
-  onTabChanged(event: any) {
+  protected recenterMapPosition(event: MatTabChangeEvent) {
     this.changedTab = event;
+    console.log(event)
   }
 }

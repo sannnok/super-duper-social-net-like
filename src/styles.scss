@@ -23,7 +23,10 @@ html, body {
 	box-sizing: border-box;
 }
 
-html, body { height: 100%; }
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .heart {
@@ -41,3 +44,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 	opacity: 0;
 }
 
+.src-code-link {
+	position: absolute;
+	bottom: 100%;
+	left: 8px;
+	bottom: 8px;
+	z-index: 1;
+	font-size: 10px;
+}

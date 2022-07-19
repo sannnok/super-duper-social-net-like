@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import * as Leaflet from 'leaflet';
 import { getLayers } from 'src/app/utils/utils';
 
@@ -9,7 +10,7 @@ import { getLayers } from 'src/app/utils/utils';
 })
 export class GeoComponent implements OnChanges {
   @Input() public latlng?: {lat: string; lng: string} = {lat: '43.530147', lng: '16.488932'};
-  @Input() public invalidate?: any;
+  @Input() public invalidate?: MatTabChangeEvent;
 
   protected title = 'AngularOSM';
   protected options: Leaflet.MapOptions = {

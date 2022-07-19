@@ -9,7 +9,7 @@
     </app-user-page>
 
     <section class="main-container__details__tab-list">
-      <mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabChanged($event)">
+      <mat-tab-group animationDuration="0ms" (selectedTabChange)="recenterMapPosition($event)">
         <mat-tab *ngFor="let tab of tabs" label="{{ tab.label }}">
           <ng-container [ngTemplateOutlet]="tab.templateRef"></ng-container>
         </mat-tab>

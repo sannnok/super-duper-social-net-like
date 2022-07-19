@@ -1,5 +1,6 @@
 import { Directive, HostListener, Renderer2 } from '@angular/core';
 import { interval, timer } from 'rxjs';
+import { throttle } from '../core/throttle.decorator';
 import { Particular } from '../interfaces/core/particular.interface';
 import { generatePerlinNoise } from '../utils/utils';
 
@@ -23,8 +24,9 @@ export class FlowDirective {
   @HostListener('mousedown', ['$event']) public onMouseDown(event: MouseEvent) {
     this.flowing = true;
     this.defineEventSource(event);
-    console.log('click');
+    console.log('mousedown');
   }
+  @throttle(20)
   @HostListener('mousemove', ['$event']) public onMove(event: MouseEvent) {
     if (!this.flowing) return;
     this.defineEventSource(event);
@@ -36,16 +38,16 @@ export class FlowDirective {
   @HostListener('touchstart', ['$event']) public onTouchStart(event: TouchEvent) {
     this.flowing = true;
     this.defineEventSource(event);
-    console.log('tap');
+    console.log('touchstart');
 
   }
+  @throttle(20)
   @HostListener('touchmove', ['$event']) public onTouchMove(event: TouchEvent) {
     if (!this.flowing) return;
     this.defineEventSource(event);
   }
   @HostListener('touchend', ['$event']) public onTouchEnd(event: TouchEvent) {
     this.flowing = false;
-    
   }
   
   constructor(private renderer: Renderer2) {
@@ -91,13 +93,13 @@ export class FlowDirective {
 
   private drawFlowing(x: number, y: number) {
     const div = this.renderer.createElement('div')
+    this.renderer.addClass(div, 'heart')
     const text = this.renderer.createText('❤️')
     this.renderer.appendChild(div, text)
-    this.renderer.appendChild(document.body, div)
-    this.renderer.addClass(div, 'heart')
     this.renderer.setStyle(div, 'top', y + 'px')
     this.renderer.setStyle(div, 'left', x + 'px')
     this.renderer.setStyle(div, 'transform', `translate(-50%, -50%)`)
+    this.renderer.appendChild(document.body, div)
 
     const particular: Particular = {
       div,
