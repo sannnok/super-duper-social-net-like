@@ -2,7 +2,7 @@
   <header>
     <ng-container *ngIf="loading; then avatarSkeleton"></ng-container>
     <img class="user__avatar" [class.hidden]="loading" src="{{ user.avatar }}" (load)="onImageLoad()" alt="UserAvatar">
-    <div>
+    <div class="user__info">
       <span class="user__username">{{ user?.username }}</span>
       <br>
       <span>{{ user.company.catchPhrase | emoji:'catchphrase' }}</span>
@@ -24,5 +24,5 @@
 </ng-template>
 
 <ng-template #avatarSkeleton>
-  <div class="user__avatar">UserAvatar</div>
+  <div class="user__avatar">*UserAvatar*</div>
 </ng-template>
