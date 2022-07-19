@@ -1,34 +1,24 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Directive, HostListener, Renderer2 } from '@angular/core';
 import { interval, timer } from 'rxjs';
+import { Particular } from '../interfaces/core/particular.interface';
 import { generatePerlinNoise } from '../utils/utils';
 
-interface Particular {
-  startPoint: {x: number, y: number},
-  noiseTrack: number[],
-  div: HTMLDivElement,
-  currentDrawIndex: number,
-  isSum: boolean;
-}
+const OPTIONS = {
+  intervalMs: 30,
+  speed: 5,
+  trailTailLive: 1700,
+  width: 15,
+  soft: 7,
+  persistence: 0.2,
+  amplitude: 0.1,
+};
 
 @Directive({
   selector: '[appFlow]'
 })
 export class FlowDirective {
-  flowing: boolean = false;
-
-  mouse = {
-    x: 0,
-    y: 0
-  }
-
-  options = {
-    trailLength: 20,
-    size: 50,
-    interval: 30,
-  };
-
-  intervalMs    = this.options.interval || 15;
-  particulars: Particular[] = [];
+  private flowing: boolean = false;
+  private particulars: Particular[] = [];
 
   @HostListener('mousedown', ['$event']) public onMouseDown(event: MouseEvent) {
     this.flowing = true;
@@ -64,20 +54,20 @@ export class FlowDirective {
 
   private setTheNoise() {
     let noise = generatePerlinNoise(1, 1000, {
-      octaveCount: 10,
-      persistence: 0.2,
-      amplitude: 0.01
+      octaveCount: OPTIONS.soft,
+      persistence: OPTIONS.persistence,
+      amplitude: OPTIONS.amplitude,
     })
 
-    return noise.map(n => Number(n.toString().split('').splice(3, 2).join('')) * 1)
+    return noise.map((n, i) => (Number(n.toString().split('').splice(3, 2).join('')) / 10 * OPTIONS.width) + i/13)
   }
 
   private initUpdates() {
-    interval(this.intervalMs).subscribe(() => this.updateTrackPositions())
+    interval(OPTIONS.intervalMs).subscribe(() => this.updateTrackPositions())
   }
 
   private updateTrackPositions() {
-    for (var i = 0; i < this.particulars.length; i++) {
+    for (let i = 0; i < this.particulars.length; i++) {
       const curParticular = this.particulars[i];
       const startPoint = curParticular.startPoint;
       const noisefuncForThisPoint = curParticular.noiseTrack;
@@ -119,7 +109,9 @@ export class FlowDirective {
 
     this.particulars.push(particular);
 
-    timer(10000).subscribe(() => {
+    timer(OPTIONS.trailTailLive / 5).subscribe(() => this.renderer.addClass(div, 'hide'))
+
+    timer(OPTIONS.trailTailLive).subscribe(() => {
       this.particulars = this.particulars.filter(p => p.div !== div)
       this.renderer.removeChild(document.body, div)
     })
