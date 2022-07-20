@@ -1,11 +1,15 @@
 import { Directive, HostListener, Renderer2 } from '@angular/core';
-import { interval, timer } from 'rxjs';
+import { interval, Subject, timer } from 'rxjs';
+import { delay } from '../core/delay.decorator';
 import { throttle } from '../core/throttle.decorator';
 import { Particular } from '../interfaces/core/particular.interface';
+import { MobileDetectorService } from '../services/core/mobile-detector.service';
 import { generatePerlinNoise } from '../utils/utils';
 
+const RESET_DELAY = new Subject();
+   
 const OPTIONS = {
-  intervalMs: 30,
+  intervalMs: 50,
   speed: 5,
   trailTailLive: 400,
   width: 15,
@@ -20,38 +24,59 @@ const OPTIONS = {
 export class FlowDirective {
   private flowing: boolean = false;
   private particulars: Particular[] = [];
+  private restrictMousedown?: boolean;
 
   @HostListener('mousedown', ['$event']) public onMouseDown(event: MouseEvent) {
+    if(this.restrictMousedown) return;
     this.flowing = true;
-    this.defineEventSource(event);
-    console.log('mousedown');
+    this.draw(event, true);
   }
-  @throttle(20)
+  @throttle(OPTIONS.intervalMs / 2.5)
   @HostListener('mousemove', ['$event']) public onMove(event: MouseEvent) {
-    if (!this.flowing) return;
-    this.defineEventSource(event);
+    this.draw(event);
+    
   }
   @HostListener('mouseup', ['$event']) public onMouseUp(event: MouseEvent) {
     this.flowing = false;
+    this.removeVibroDelay();
   }
   
   @HostListener('touchstart', ['$event']) public onTouchStart(event: TouchEvent) {
     this.flowing = true;
-    this.defineEventSource(event);
-    console.log('touchstart');
-
+    this.draw(event, true);
   }
-  @throttle(20)
+  @throttle(OPTIONS.intervalMs / 2.5)
   @HostListener('touchmove', ['$event']) public onTouchMove(event: TouchEvent) {
-    if (!this.flowing) return;
-    this.defineEventSource(event);
+    this.draw(event);
+    this.restrictMousedown = true;
   }
   @HostListener('touchend', ['$event']) public onTouchEnd(event: TouchEvent) {
     this.flowing = false;
+    this.removeVibroDelay();
   }
   
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private mobileDetectorService: MobileDetectorService) {
     this.initUpdates();
+    this.mobileDetectorService.isMobile$?.subscribe(isMobile => this.restrictMousedown = isMobile)
+  }
+
+  @delay(300, RESET_DELAY)
+  private doVibroImpulse() {
+    navigator.vibrate(1);
+  }
+
+  removeVibroDelay() {
+    RESET_DELAY.next(null);
+  }
+
+  private draw(event: TouchEvent | MouseEvent, onetimeDraw?: boolean) {
+    if (!this.flowing) return;
+    
+    const [x, y] = this.getCoords(event);
+
+    this.drawFlowing(x, y)
+    if (onetimeDraw) return;
+    this.doVibroImpulse();
   }
 
   private setTheNoise() {
@@ -117,7 +142,7 @@ export class FlowDirective {
     })
   }
 
-  private defineEventSource(event: MouseEvent | TouchEvent) {
+  private getCoords(event: MouseEvent | TouchEvent) {
     let x: number, y: number;
     if(event instanceof MouseEvent) {
       x = event.clientX;
@@ -127,6 +152,6 @@ export class FlowDirective {
       y = event.touches[0].clientY;
     }
 
-    this.drawFlowing(x, y)
+    return [x, y];
   }
 }

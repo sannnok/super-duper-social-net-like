@@ -11,6 +11,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import * as Hammer from 'hammerjs';
@@ -34,6 +35,14 @@ export class MyHammerConfig extends HammerGestureConfig {
     })
   }
 }
+
+const MATERIAL = [
+  MatSidenavModule,
+  MatListModule,
+  MatTabsModule,
+  MatCardModule,
+  MatDialogModule,
+]
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,10 +65,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientModule,
     HammerModule,
     LeafletModule,
-    MatSidenavModule,
-    MatListModule,
-    MatTabsModule,
-    MatCardModule,
+    ...MATERIAL,
   ],
   providers: [
     {

@@ -1,15 +1,25 @@
-export function throttle(delay: number = 300): MethodDecorator {
+import { timer } from "rxjs";
+
+export function throttle(interval: number = 300): MethodDecorator {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-    let canRun = false;
-    setInterval(() => {canRun = true}, delay) 
+    let throttlePause = false;
     const original = descriptor.value;
+
     descriptor.value = function (...args: any[]) {
-      if (canRun) {
-        original.apply(this, args)
-        console.log('canRun permition - function called -> original')
-        canRun = false;
-      }
+
+      if(throttlePause) return;
+
+      throttlePause = true;
+
+      timer(interval).subscribe(() => {
+
+        original.apply(this, args);
+
+        throttlePause = false;
+
+      });
     };
+
     return descriptor;
   };
 }

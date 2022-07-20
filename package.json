@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "ammend": "git commit --amend --no-edit",
+    "deploy": "ng build --configuration production && git add . && git commit -m 'deploy:npm' && git push"
   },
   "private": true,
   "dependencies": {
@@ -31,6 +33,7 @@
     "@angular-devkit/build-angular": "^14.0.6",
     "@angular/cli": "~14.0.6",
     "@angular/compiler-cli": "^14.0.0",
+    "@types/events": "^3.0.0",
     "@types/hammerjs": "^2.0.41",
     "@types/jasmine": "~4.0.0",
     "@types/leaflet": "^1.7.11",
