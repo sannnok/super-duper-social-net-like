@@ -7,7 +7,7 @@ import { generatePerlinNoise } from '../utils/utils';
 const OPTIONS = {
   intervalMs: 30,
   speed: 5,
-  trailTailLive: 600,
+  trailTailLive: 400,
   width: 15,
   soft: 7,
   persistence: 0.2,
@@ -55,7 +55,7 @@ export class FlowDirective {
   }
 
   private setTheNoise() {
-    let noise = generatePerlinNoise(1, 100, {
+    let noise = generatePerlinNoise(1, 1, {
       octaveCount: OPTIONS.soft,
       persistence: OPTIONS.persistence,
       amplitude: OPTIONS.amplitude,
@@ -78,9 +78,7 @@ export class FlowDirective {
         curParticular.currentDrawIndex = Math.floor(Math.random() * curParticular.noiseTrack.length / 2);
       }
 
-      const noiseX = curParticular.isSum
-        ? curParticular.startPoint.x + noisefuncForThisPoint[curParticular.currentDrawIndex]
-        : curParticular.startPoint.x - noisefuncForThisPoint[curParticular.currentDrawIndex];
+      const noiseX =  curParticular.startPoint.x - noisefuncForThisPoint[curParticular.currentDrawIndex];
 
       startPoint.y -= 1;
       const goingUpY = startPoint.y;
