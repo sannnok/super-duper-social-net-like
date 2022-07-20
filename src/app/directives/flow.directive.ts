@@ -60,7 +60,7 @@ export class FlowDirective {
     this.mobileDetectorService.isMobile$?.subscribe(isMobile => this.restrictMousedown = isMobile)
   }
 
-  @delay(300, RESET_DELAY)
+  @delay(500, RESET_DELAY)
   private doVibroImpulse() {
     navigator.vibrate(1);
   }
@@ -72,9 +72,15 @@ export class FlowDirective {
   private draw(event: TouchEvent | MouseEvent, onetimeDraw?: boolean) {
     if (!this.flowing) return;
     
-    const [x, y] = this.getCoords(event);
+    const coords = this.getCoords(event);
 
-    this.drawFlowing(x, y)
+    type t = [number, number, ...number[]];
+    const [x, y, x2, y2, x3, y3, x4, y4, x5, y5] = coords as t;
+
+    for (let i = 0; i < coords.length; i+=2) {
+      const x = coords[i], y = coords[i + 1];
+      this.drawFlowing(x, y);
+    }
     if (onetimeDraw) return;
     this.doVibroImpulse();
   }
@@ -114,7 +120,9 @@ export class FlowDirective {
     }
   }
 
-  private drawFlowing(x: number, y: number) {
+  private drawFlowing(x?: number, y?: number) {
+    if (!x || !y) return;
+
     const div = this.renderer.createElement('div')
     this.renderer.addClass(div, 'heart')
     const text = this.renderer.createText('❤️')
@@ -144,14 +152,25 @@ export class FlowDirective {
 
   private getCoords(event: MouseEvent | TouchEvent) {
     let x: number, y: number;
+    let x2, y2, x3, y3, x4, y4, x5, y5 = 0;
+
     if(event instanceof MouseEvent) {
       x = event.clientX;
       y = event.clientY;
     } else {
       x = event.touches[0].clientX;
       y = event.touches[0].clientY;
+      x2 = event.touches[1]?.clientX;
+      y2 = event.touches[1]?.clientY;
+      x3 = event.touches[2]?.clientX;
+      y3 = event.touches[2]?.clientY;
+      x4 = event.touches[3]?.clientX;
+      y4 = event.touches[3]?.clientY;
+      x5 = event.touches[4]?.clientX;
+      y5 = event.touches[4]?.clientY;
     }
 
-    return [x, y];
+
+    return [x, y, x2, y2, x3, y3, x4, y4, x5, y5];
   }
 }
