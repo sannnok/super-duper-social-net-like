@@ -74,9 +74,6 @@ export class FlowDirective {
     
     const coords = this.getCoords(event);
 
-    type t = [number, number, ...number[]];
-    const [x, y, x2, y2, x3, y3, x4, y4, x5, y5] = coords as t;
-
     for (let i = 0; i < coords.length; i+=2) {
       const x = coords[i], y = coords[i + 1];
       this.drawFlowing(x, y);
